@@ -21,6 +21,22 @@ namespace EmployeePayRollThreading
             });
             Console.WriteLine(this.employeePayrollDetailList.ToString());
         }
+        public void addEmployeeToPayrollWithThread(List<EmployeeDetails> employeePayrollDataList)
+        {
+            employeePayrollDataList.ForEach(employeeData =>
+            {
+                Task thread = new Task(() =>
+                {
+
+                    Console.WriteLine("Employee being added: " + employeeData.EmployeeName);
+                    this.addEmployeePayroll(employeeData);
+                    Console.WriteLine("Employee added: " + employeeData.EmployeeName);
+
+                });
+                thread.Start();
+            });
+            Console.WriteLine(this.employeePayrollDetailList.ToString());
+        }
         public void addEmployeePayroll(EmployeeDetails emp)
         {
             employeePayrollDetailList.Add(emp); 
